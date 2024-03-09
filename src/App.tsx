@@ -1,7 +1,12 @@
 import { Outlet } from 'react-router-dom';
+import TodoContextProvider from './context/TodoContext';
 
 function App() {
-  return <Outlet />;
+  return (
+    <TodoContextProvider>
+      <Outlet />
+    </TodoContextProvider>
+  );
 }
 
 export default App;

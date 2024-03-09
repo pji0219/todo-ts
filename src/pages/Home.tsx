@@ -1,17 +1,11 @@
-import Todo from '../components/Todo';
+import { useContext } from 'react';
 
-const todos = [
-  {
-    id: 1,
-    text: '코딩 하기',
-  },
-  {
-    id: 2,
-    text: '노래 부르기',
-  },
-];
+import Todo from '../components/Todo';
+import { TodoContext } from '../context/TodoContext';
 
 export default function Home() {
+  const { todos } = useContext(TodoContext);
+
   return (
     <ul>
       {todos.map((todo) => (

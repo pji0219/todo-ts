@@ -8,14 +8,14 @@ type Todo = {
 type TodosContextObj = {
   todos: Todo[];
   onAddTodoHandler: (text: string) => void;
-  onUpdateTodoHandler: (id: any) => void;
+  onUpdateTodoHandler: (id: any, text: string) => void;
   onRemoveTodoHandler: (id: any) => void;
 };
 
 export const TodoContext = createContext<TodosContextObj>({
   todos: [],
   onAddTodoHandler: (text: string) => {},
-  onUpdateTodoHandler: (id: any) => {},
+  onUpdateTodoHandler: (id: any, text: string) => {},
   onRemoveTodoHandler: (id: any) => {},
 });
 
@@ -29,9 +29,13 @@ export default function TodoContextProvider({ children }: PropsWithChildren) {
     nextId.current += 1;
   };
 
-  const onUpdateTodoHandler = (id: any) => {};
+  const onUpdateTodoHandler = (id: any, text: string) => {
+    setTodos((prev) => prev.map((todo) => (todo.id === id ? todo.text : todo)));
+  };
 
-  const onRemoveTodoHandler = (id: any) => {};
+  const onRemoveTodoHandler = (id: any) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
 
   return (
     <TodoContext.Provider

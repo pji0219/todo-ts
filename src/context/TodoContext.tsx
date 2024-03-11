@@ -30,7 +30,14 @@ export default function TodoContextProvider({ children }: PropsWithChildren) {
   };
 
   const onUpdateTodoHandler = (id: any, text: string) => {
-    setTodos((prev) => prev.map((todo) => (todo.id === id ? todo.text : todo)));
+    const editedTodo = {
+      id,
+      text,
+    };
+
+    setTodos((prev) =>
+      prev.map((todo) => (todo.id === id ? editedTodo : todo))
+    );
   };
 
   const onRemoveTodoHandler = (id: any) => {

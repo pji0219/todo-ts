@@ -1,0 +1,10 @@
+.todo {
+  padding: 16px;
+  margin-bottom: 8px;
+  width: 500px;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: lightgray;
+}

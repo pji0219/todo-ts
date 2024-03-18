@@ -6,6 +6,7 @@ import './index.css';
 import App from './App';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
+import TodoContextProvider from './context/TodoContext';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <TodoContextProvider>
+      <RouterProvider router={router} />
+    </TodoContextProvider>
   </React.StrictMode>
 );

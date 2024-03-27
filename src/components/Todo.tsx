@@ -1,17 +1,19 @@
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-import { TodoContext } from '../context/TodoContext';
-import styles from './Todo.module.css';
+import { useTodoContext } from '../context/TodoContext';
+import TodoContainer from './UI/TodoContainer';
 
 type Props = {
   id: any;
   text: string;
+  isCompleted: boolean;
 };
 
-export default function Todo({ id, text }: Props) {
+export default function Todo({ id, text, isCompleted }: Props) {
   const [editedTodo, setEditedTodo] = useState(text);
   const [editMode, setEditMode] = useState(false);
-  const { onUpdateTodoHandler, onRemoveTodoHandler } = useContext(TodoContext);
+  const [isComplete, setIsComplete] = useState(isCompleted);
+  const { onUpdateTodoHandler, onRemoveTodoHandler } = useTodoContext();
 
   const onChangeTodoHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEditedTodo(event.target.value);
@@ -21,15 +23,20 @@ export default function Todo({ id, text }: Props) {
     setEditMode((prev) => !prev);
   };
 
+  const onCompleteHadler = () => {
+    setIsComplete((prev) => !prev);
+    onUpdateTodoHandler(id, text, isComplete);
+  };
+
   return (
-    <li className={styles.todo}>
+    <TodoContainer>
       {editMode ? (
         <>
           <input value={editedTodo} onChange={onChangeTodoHandler} />
           <div>
             <button
               onClick={() => {
-                onUpdateTodoHandler(id, editedTodo);
+                onUpdateTodoHandler(id, editedTodo, isCompleted);
                 onEditModeHandler();
               }}
             >
@@ -42,6 +49,12 @@ export default function Todo({ id, text }: Props) {
         <>
           <span>{text}</span>
           <div>
+            <label htmlFor='completed'>완료</label>
+            <input
+              type='checkbox'
+              checked={isComplete}
+              onChange={onCompleteHadler}
+            />
             <button onClick={onEditModeHandler}>수정</button>
             <button
               onClick={() => {
@@ -53,6 +66,6 @@ export default function Todo({ id, text }: Props) {
           </div>
         </>
       )}
-    </li>
+    </TodoContainer>
   );
 }

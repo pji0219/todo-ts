@@ -1,10 +1,9 @@
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
-import { TodoContext } from '../context/TodoContext';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useTodoContext } from '../context/TodoContext';
 
 export default function NewTodo() {
-  const { onAddTodoHandler } = useContext(TodoContext);
+  const { onAddTodoHandler } = useTodoContext();
 
-  // todo: 커스텀 훅으로 input로직 재사용 하기
   const [newTodo, setNewTodo] = useState('');
 
   const onChangeNewTodoHnadler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +13,7 @@ export default function NewTodo() {
   const onSubmitHandler = (event: FormEvent) => {
     event.preventDefault();
     onAddTodoHandler(newTodo);
+    setNewTodo('');
   };
 
   return (
